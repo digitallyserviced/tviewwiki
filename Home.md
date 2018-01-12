@@ -13,6 +13,7 @@
 - [[DropDown]]: A drop-down selection box.
 - [[InputField]]: A one-line input field.
 - [[Modal]]: A modal message window.
+- [[Unicode]]: Demonstrates the use of wide unicode characters (e.g. Chinese).
 
 ## A Demo Application
 
