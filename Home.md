@@ -16,6 +16,10 @@
 - [[Modal]]: A modal message window.
 - [[Unicode]]: Demonstrates the use of wide unicode characters (e.g. Chinese).
 
+## Advanced Tutorials
+
+- [[Primitives]]: Writing your own primitives.
+
 ## A Demo Application
 
 - [[Postgres]]: A simple PostgreSQL database browser in ~300 lines of code.
