@@ -139,3 +139,67 @@ The result may look like this:
 
 > TODO: Insert screenshot (screenshot.png)
 
+You will also want to let the user select a radio button by using the up and down arrow keys. This is done by implementing the `InputHandler()` function. If this function returns `nil` (the `Box` primitive's default), your primitive does not process any keyboard input and will therefore not receive focus. If you want it to process keyboard input, you return a function which is called on each key event:
+
+```go
+func (r *RadioButtons) InputHandler() func(event *tcell.EventKey, setFocus func(p tview.Primitive)) {
+	return r.WrapInputHandler(func(event *tcell.EventKey, setFocus func(p tview.Primitive)) {
+		switch event.Key() {
+		case tcell.KeyUp:
+			r.currentOption--
+			if r.currentOption < 0 {
+				r.currentOption = 0
+			}
+		case tcell.KeyDown:
+			r.currentOption++
+			if r.currentOption >= len(r.options) {
+				r.currentOption = len(r.options) - 1
+			}
+		}
+	})
+}
+```
+
+We check the key event and change the primitive's current option based on whether the up arrow or the down arrow was pressed. You will notice that we call `WrapInputHandler()`. This is not strictly necessary but it will allow users of the primitive to use the [`Box.SetInputCapture()`](https://godoc.org/github.com/rivo/tview#Box.SetInputCapture) function.
+
+A `setFocus` function is also provided which allows you to pass the focus onto another primitive. This is usually only needed when your primitive is composed of other primitives. For example, the [`DropDown`](https://godoc.org/github.com/rivo/tview#DropDown) primitive internally uses a [`List`](https://godoc.org/github.com/rivo/tview#List) primitive for the selectable elements. Once the user presses a key, that list pops out and receives focus. The next section describes how to deal with primitive compositions.
+
+By the way, you can find the radio button code in the [`demos/primitive`](https://github.com/rivo/tview/tree/master/demos/primitive) directory.
+
+### Primitives Composed of Other Primitives
+
+Some primitives are composed of other primitives. For example, the [`Flex`](https://godoc.org/github.com/rivo/tview#Flex), [`Grid`](https://godoc.org/github.com/rivo/tview#Flex), and [`Form`](https://godoc.org/github.com/rivo/tview#Flex) primitives can all contain other primitives. If your primitive does not fall into this category, you can ignore this section.
+
+If you implement a primitive composed of other primitives, you can simply call their `SetRect()` function to position them and their `Draw()` function in your own `Draw()` function.
+
+Keyboard input is slightly more complicated in this case, however, because only one primitive can have focus at any time. First of all, you will need to decide which of your "child primitives" will receive focus when you receive focus. This is done by implementing the `Focus()` function as follows:
+
+```go
+func (p *MyPrimitive) Focus(delegate func(p Primitive)) {
+	delegate(p.childPrimitives[p.currentChild])
+}
+```
+
+The `Focus()` function receives a "delegate" function which can be used to pass on the focus to one of your child elements. Alternatively, if your primitive needs focus itself in some cases, the function could look like this (the default, implemented in `Box`, is to keep the focus to yourself):
+
+```go
+func (p *MyPrimitive) Focus(delegate func(p Primitive)) {
+	if d.childPrimitive != nil {
+		delegate(d.childPrimitive)
+	} else {
+		p.Box.Focus(delegate)
+	}
+}
+```
+
+Because your primitive can also be part of another primitive, we need to know if your primitive or one of its child primitives currently has focus. You therefore need to implement the `HasFocus()` function:
+
+```go
+func (p *MyPrimitive) HasFocus() bool {
+	if d.childPrimitive != nil {
+		return d.childPrimitive.HasFocus()
+	} else {
+		p.Box.HasFocus()
+	}
+}
+```
