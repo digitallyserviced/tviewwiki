@@ -1,5 +1,3 @@
-# WARNING: This is work in progress and therefore incomplete!
-
 # How to Implement Your Own Primitive
 
 In some rare cases, you may need functionality that `tview` does not offer. If it's something that you believe may be needed by others as well, consider opening an [issue](https://github.com/rivo/tview/issues) with a feature request. (Definitely do that before sending me pull requests.) If it's a reasonable request, it's likely that I will add it to `tview`.
@@ -34,7 +32,7 @@ tview.NewBox().
   })
 ```
 
-> TODO: Insert screenshot (boxwithcenterline.png)
+[[https://github.com/rivo/tview/blob/master/demos/primitive/boxwithcenterline.png]]
 
 This also works for other primitives, and that's where the return values come into play. They dictate where the other content of the primitive will be placed. Here is the same example but for a `TextView`:
 
@@ -58,7 +56,7 @@ textView.SetBorder(true).
   })
 ```
 
-> TODO: Insert screenshot (textviewwithcenterline.png)
+[[https://github.com/rivo/tview/blob/master/demos/primitive/textviewwithcenterline.png]]
 
 ### Hooking Into the Application's `Draw()` Function
 
@@ -137,7 +135,7 @@ The `tview.Print()` function is quite powerful and it is used throughout the ent
 
 The result may look like this:
 
-> TODO: Insert screenshot (screenshot.png)
+[[https://github.com/rivo/tview/blob/master/demos/primitive/screenshot.png]]
 
 You will also want to let the user select a radio button by using the up and down arrow keys. This is done by implementing the `InputHandler()` function. If this function returns `nil` (the `Box` primitive's default), your primitive does not process any keyboard input and will therefore not receive focus. If you want it to process keyboard input, you return a function which is called on each key event:
 
