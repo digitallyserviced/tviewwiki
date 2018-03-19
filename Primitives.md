@@ -89,4 +89,53 @@ app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 
 If none of this is enough to achieve your goals, you can write your own `Primitive`. Please note that the `Primitive` interface may be subject to changes (e.g. I might add mouse interaction in the future).
 
-> TODO
+One could say that all you need to do is implement the [`Primitive` interface](https://godoc.org/github.com/rivo/tview#Primitive). And this is true. But your life will be much easier if you subclass from the [`Box` primitive](https://godoc.org/github.com/rivo/tview#Box), as all other primitives do, because `Box` already provides default implementations for many of `Primitive`'s functions.
+
+Let's say we want to implement a simple radio buttons primitive. The definition could look like this:
+
+```go
+type RadioButtons struct {
+	*tview.Box
+	options       []string
+	currentOption int
+}
+
+func NewRadioButtons(options []string) *RadioButtons {
+	return &RadioButtons{
+		Box:     tview.NewBox(),
+		options: options,
+	}
+}
+```
+
+Because we subclass from the `Box` primitive, we automatically inherit all of its functions such as [`SetBorder()`](https://godoc.org/github.com/rivo/tview#Box.SetBorder) and [`SetTitle()`](https://godoc.org/github.com/rivo/tview#Box.SetTitle).
+
+`Box`es are empty per default so we add our own `Draw()` function to draw the radio button options:
+
+```go
+func (r *RadioButtons) Draw(screen tcell.Screen) {
+	r.Box.Draw(screen)
+	x, y, width, height := r.GetInnerRect()
+
+	for index, option := range r.options {
+		if index >= height {
+			break
+		}
+		radioButton := "\u25ef" // Unchecked.
+		if index == r.currentOption {
+			radioButton = "\u25c9" // Checked.
+		}
+		line := fmt.Sprintf(`%s[white]  %s`, radioButton, option)
+		tview.Print(screen, line, x, y+index, width, tview.AlignLeft, tcell.ColorYellow)
+	}
+}
+```
+
+At first, we call the `Draw()` function of `Box`. This will clear the space for us and possibly draw the border and title. We then determine the area that we need to draw into by calling `GetInnerRect()`. After that, we draw the options, consisting of a radio button (checked or unchecked) and the option text. We need to ensure that we don't draw outside the allowed space so we break out of the loop when we reach the maximum height. Horizontally, the `tview.Print()` function will take care of that.
+
+The `tview.Print()` function is quite powerful and it is used throughout the entire `tview` package. It takes a screen coordinate and a maximum width. Text will not be written outside that box. In addition, you can align the text to the left, right, or center, and give it a color. It also uses color tags (described [here](https://godoc.org/github.com/rivo/tview)) so you can give different parts of the text different colors.
+
+The result may look like this:
+
+> TODO: Insert screenshot (screenshot.png)
+
