@@ -13,7 +13,7 @@
 - [[Checkbox]]: A checkbox.
 - [[DropDown]]: A drop-down selection box.
 - [[InputField]]: A one-line input field.
-- [[Modal]]: A modal message window.
+- [[Modal]]: Modal windows.
 - [[Unicode]]: Demonstrates the use of wide unicode characters (e.g. Chinese).
 - [[ANSII]]: How to pipe colorized output from other programs into `tview`.
 
