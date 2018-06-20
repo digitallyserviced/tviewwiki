@@ -1,4 +1,4 @@
-A navigable Table with fixed rows/columns and cell selections:
+A navigable table with fixed rows/columns and cell selections:
 
 [[https://github.com/rivo/tview/blob/master/demos/table/screenshot.png]]
 
