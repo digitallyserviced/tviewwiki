@@ -5,6 +5,7 @@
 - [[Form]]: A data entry form.
 - [[TextView]]: A multi-color text view with highlights.
 - [[Table]]: A table view with fixed rows/columns and selectable cells.
+- [[TreeView]]: A tree view for hierarchical data.
 - [[Grid]]: Using Grid to layout multiple widgets.
 - [[Flex]]: Using Flexbox to layout multiple widgets.
 - [[Pages]]: Using Pages to switch between different widgets.
