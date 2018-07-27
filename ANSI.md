@@ -1,4 +1,4 @@
-`tview` provides the functions [`ANSIIWriter()`](https://godoc.org/github.com/rivo/tview#ANSIIWriter) and [`TranslateANSII()`](https://godoc.org/github.com/rivo/tview#TranslateANSII) which translate common ANSII escape sequences into color tags used by `tview`. This can be useful when you want to display colorized output from other programs in `tview`.
+`tview` provides the functions [`ANSIWriter()`](https://godoc.org/github.com/rivo/tview#ANSIWriter) and [`TranslateANSI()`](https://godoc.org/github.com/rivo/tview#TranslateANSI) which translate common ANSI escape sequences into color tags used by `tview`. This can be useful when you want to display colorized output from other programs in `tview`.
 
 Here is an example that displays output from `stdin`:
 
@@ -21,7 +21,7 @@ func main() {
 		})
 	textView.SetBorder(true).SetTitle("Stdin")
 	go func() {
-		w := tview.ANSIIWriter(textView)
+		w := tview.ANSIWriter(textView)
 		if _, err := io.Copy(w, os.Stdin); err != nil {
 			panic(err)
 		}
@@ -32,7 +32,7 @@ func main() {
 }
 ```
 
-When you run this program, you must pipe text into it. To illustrate the handling of ANSII escape sequences, you could do the following on Linux:
+When you run this program, you must pipe text into it. To illustrate the handling of ANSI escape sequences, you could do the following on Linux:
 
 ```bash
 ls -l --color=always | go run main.go
