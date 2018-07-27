@@ -16,7 +16,7 @@
 - [[InputField]]: A one-line input field.
 - [[Modal]]: Modal windows.
 - [[Unicode]]: Demonstrates the use of wide unicode characters (e.g. Chinese).
-- [[ANSII]]: How to pipe colorized output from other programs into `tview`.
+- [[ANSI]]: How to pipe colorized output from other programs into `tview`.
 
 ## Advanced Tutorials
 
