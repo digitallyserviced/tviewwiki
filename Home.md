@@ -21,6 +21,7 @@
 ## Advanced Tutorials
 
 - [[Primitives]]: Writing your own primitives.
+- [[Concurrency]]: How to deal with concurrency in `tview`.
 
 ## A Demo Application
 
