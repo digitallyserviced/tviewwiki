@@ -14,7 +14,7 @@
 - [[Checkbox]]: A checkbox.
 - [[DropDown]]: A drop-down selection box.
 - [[InputField]]: A one-line input field.
-- [[Modal]]: Modal windows.
+- [[Modal]]: Modal windows. See also the [[Timer]] example.
 - [[Unicode]]: Demonstrates the use of wide unicode characters (e.g. Chinese).
 - [[ANSI]]: How to pipe colorized output from other programs into `tview`.
 
