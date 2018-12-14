@@ -26,9 +26,8 @@ func currentTimeString() string {
 func updateTime() {
 	for {
 		time.Sleep(refreshInterval)
-		app.QueueUpdate(func() {
+		app.QueueUpdateDraw(func() {
 			view.SetText(currentTimeString())
-			app.Draw()
 		})
 	}
 }
