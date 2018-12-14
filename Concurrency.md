@@ -28,7 +28,7 @@ go func() {
 }()
 ```
 
-`Application.QueueUpdateDraw()` is like `Application.QueueUpdate()` but it also calls `Application.Draw()` at the end. Depending on the granularity of your changes, you may not always want to redraw the screen. The availability of these two functions leaves the decision up to you.
+`QueueUpdateDraw()` is like `QueueUpdate()` but it also calls [`Application.Draw()`](https://godoc.org/github.com/rivo/tview#Application.Draw) at the end. Depending on the granularity of your changes, you may not always want to redraw the screen. The availability of these two functions leaves the decision up to you.
 
 It is also recommended to use `QueueUpdate()` if you perform a read-only operation on a primitive in a goroutine, unless you are absolutely certain that no other primitive or goroutine makes any changes to the primitive you're accessing.
 
