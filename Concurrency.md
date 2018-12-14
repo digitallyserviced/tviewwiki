@@ -18,18 +18,17 @@ For all other actions on primitives, your handler should queue an update. The ne
 
 ## Actions in Goroutines
 
-If you make modifications to primitives from within a goroutine, to avoid race conditions, you will need to synchronize them with the main application loop. The function that helps you do this is [`Application.QueueUpdate()`](https://godoc.org/github.com/rivo/tview#Application.QueueUpdate). Here's an example:
+If you make modifications to primitives from within a goroutine, to avoid race conditions, you will need to synchronize them with the main application loop. The functions that help you do this are [`Application.QueueUpdate()`](https://godoc.org/github.com/rivo/tview#Application.QueueUpdate) and [`Application.QueueUpdateDraw()`](https://godoc.org/github.com/rivo/tview#Application.QueueUpdateDraw). Here's an example:
 
 ```go
 go func() {
-  app.QueueUpdate(func() {
+  app.QueueUpdateDraw(func() {
     table.SetCellSimple(0, 0, "Foo bar")
-    app.Draw()
   })
 }()
 ```
 
-Here we also call `Application.Draw()` to refresh the screen. Depending on the granularity of your changes, you may not always want to redraw the screen. `QueueUpdate()` leaves it up to you.
+`Application.QueueUpdateDraw()` is like `Application.QueueUpdate()` but it also calls `Application.Draw()` at the end. Depending on the granularity of your changes, you may not always want to redraw the screen. The availability of these two functions leaves the decision up to you.
 
 It is also recommended to use `QueueUpdate()` if you perform a read-only operation on a primitive in a goroutine, unless you are absolutely certain that no other primitive or goroutine makes any changes to the primitive you're accessing.
 
@@ -40,3 +39,5 @@ go func() {
   app.Draw()
 }()
 ```
+
+See also the [[Timer]] page for a real-life example of how this is used.
