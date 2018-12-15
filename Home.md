@@ -14,7 +14,7 @@
 - [[Checkbox]]: A checkbox.
 - [[DropDown]]: A drop-down selection box.
 - [[InputField]]: A one-line input field.
-- [[Modal]]: Modal windows. See also the [[Timer]] example.
+- [[Modal]]: Modal windows.
 - [[Unicode]]: Demonstrates the use of wide unicode characters (e.g. Chinese).
 - [[ANSI]]: How to pipe colorized output from other programs into `tview`.
 
@@ -23,6 +23,7 @@
 - [[Primitives]]: Writing your own primitives.
 - [[Concurrency]]: How to deal with concurrency in `tview`.
 
-## A Demo Application
+## Demo Applications
 
+- [[Timer]]: Two implementations of a small application that displays the current time.
 - [[Postgres]]: A simple PostgreSQL database browser in ~300 lines of code.
