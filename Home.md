@@ -22,6 +22,7 @@
 
 - [[Primitives]]: Writing your own primitives.
 - [[Concurrency]]: How to deal with concurrency in `tview`.
+- [[CustomKeys]]: How to use your own keys instead of `tview`'s default  ones.
 
 ## Demo Applications
 
