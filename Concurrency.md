@@ -32,6 +32,18 @@ go func() {
 
 It is also recommended to use `QueueUpdate()` if you perform a read-only operation on a primitive in a goroutine, unless you are absolutely certain that no other primitive or goroutine makes any changes to the primitive you're accessing.
 
+`QueueUpdate()` and `QueueUpdateDraw()` return after the provided function has executed. This is important when, for example, you want to clear a `TextView` before writing to it (because `TextView.Clear()` is not thread-safe):
+
+```go
+go func() {
+	app.QueueUpdate(func() {
+		textView.Clear()
+	})
+	fmt.Fprintln(textView, "line1")
+	fmt.Fprintln(textView, "line2")
+}()
+```
+
 Note that calling `Application.Draw()` is always safe. If all you need to do is refresh the screen, you don't need to wrap the call to `Draw()` in `QueueUpdate()`:
 
 ```go
