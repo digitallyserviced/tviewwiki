@@ -1,3 +1,7 @@
+## Frequently Asked Questions
+
+Please check the [[FAQ]] before posting an issue.
+
 ## Screenshots and Demo Code
 
 - [[Box]]: A simple box with a title.
