@@ -201,3 +201,13 @@ func (p *MyPrimitive) HasFocus() bool {
 	}
 }
 ```
+
+Because you your own implementation of `HasFocus()` to be called instead of `Box`'s implementation (from which you're subclassing), you need to set the `Focusable` object in your constructor:
+
+```go
+func NewMyPrimitive() {
+	...
+	p.focus = p
+	return p
+}
+```
