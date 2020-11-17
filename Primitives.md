@@ -112,7 +112,7 @@ Because we subclass from the `Box` primitive, we automatically inherit all of it
 
 ```go
 func (r *RadioButtons) Draw(screen tcell.Screen) {
-	r.Box.Draw(screen)
+	r.Box.DrawForSubclass(screen, r)
 	x, y, width, height := r.GetInnerRect()
 
 	for index, option := range r.options {
@@ -129,7 +129,9 @@ func (r *RadioButtons) Draw(screen tcell.Screen) {
 }
 ```
 
-At first, we call the `Draw()` function of `Box`. This will clear the space for us and possibly draw the border and title. We then determine the area that we need to draw into by calling `GetInnerRect()`. After that, we draw the options, consisting of a radio button (checked or unchecked) and the option text. We need to ensure that we don't draw outside the allowed space so we break out of the loop when we reach the maximum height. Horizontally, the `tview.Print()` function will take care of that.
+At first, we call the `DrawForSubclass()` function of `Box`. In theory, you could also call `Box.Draw()` here but then `Box` would not be able to call your `HasFocus()` function to draw the correct box frame — so we call `DrawForSubclass()` instead which is intended to be used only in this specific situation.
+
+This will clear the space for us and possibly draw the border and title. We then determine the area that we need to draw into by calling `GetInnerRect()`. After that, we draw the options, consisting of a radio button (checked or unchecked) and the option text. We need to ensure that we don't draw outside the allowed space so we break out of the loop when we reach the maximum height. Horizontally, the `tview.Print()` function will take care of that.
 
 The `tview.Print()` function is quite powerful and it is used throughout the entire `tview` package. It takes a screen coordinate and a maximum width. Text will not be written outside that box. In addition, you can align the text to the left, right, or center, and give it a color. It also uses color tags (described [here](https://godoc.org/github.com/rivo/tview)) so you can give different parts of the text different colors.
 
