@@ -164,6 +164,33 @@ We check the key event and change the primitive's current option based on whethe
 
 A `setFocus` function is also provided which allows you to pass the focus onto another primitive. This is usually only needed when your primitive is composed of other primitives. For example, the [`DropDown`](https://godoc.org/github.com/rivo/tview#DropDown) primitive internally uses a [`List`](https://godoc.org/github.com/rivo/tview#List) primitive for the selectable elements. Once the user presses a key, that list pops out and receives focus. The next section describes how to deal with primitive compositions.
 
+Additionally, mouse events should be handled:
+
+```go
+func (r *RadioButtons) MouseHandler() func(action tview.MouseAction, event *tcell.EventMouse, setFocus func(p tview.Primitive)) (consumed bool, capture tview.Primitive) {
+	return r.WrapMouseHandler(func(action tview.MouseAction, event *tcell.EventMouse, setFocus func(p tview.Primitive)) (consumed bool, capture tview.Primitive) {
+		x, y := event.Position()
+		_, rectY, _, _ := r.GetInnerRect()
+		if !r.InRect(x, y) {
+			return false, nil
+		}
+
+		if action == tview.MouseLeftClick {
+			setFocus(r)
+			index := y - rectY
+			if index >= 0 && index < len(r.options) {
+				r.currentOption = index
+				consumed = true
+			}
+		}
+
+		return
+	})
+}
+```
+
+If the mouse click was outside the primitive's box, we can ignore it. A left click should set the focus to this primitive and select the clicked option. We set `consumed` to `true` to let the application know that we handled the mouse click. This will result in a redraw.
+
 By the way, you can find the radio button code in the [`demos/primitive`](https://github.com/rivo/tview/tree/master/demos/primitive) directory.
 
 ### Primitives Composed of Other Primitives
@@ -196,10 +223,48 @@ Because your primitive can also be part of another primitive, we need to know if
 
 ```go
 func (p *MyPrimitive) HasFocus() bool {
-	if d.childPrimitive != nil {
-		return d.childPrimitive.HasFocus()
+	if p.childPrimitive != nil {
+		return p.childPrimitive.HasFocus()
 	} else {
 		p.Box.HasFocus()
 	}
+}
+```
+
+Key events as well as mouse events are passed down the hierarchy. So you will need to implement the handlers accordingly. For example:
+
+```go
+func (p *MyPrimitive) InputHandler() func(event *tcell.EventKey, setFocus func(p tview.Primitive)) {
+	return p.WrapInputHandler(func(event *tcell.EventKey, setFocus func(p tview.Primitive)) {
+		if !p.hasFocus {
+			// Pass event on to child primitive.
+			if p.childPrimitive != nil && p.childPrimitive.HasFocus() {
+				if handler := p.childPrimitive.InputHandler(); handler != nil {
+					handler(event, setFocus)
+				}
+			}
+			return
+		}
+		// ...handle key events not forwarded to the child primitive...
+	}
+}
+
+func (p *MyPrimitive) MouseHandler() func(action tview.MouseAction, event *tcell.EventMouse, setFocus func(p tview.Primitive)) (consumed bool, capture Primitive) {
+	return p.WrapMouseHandler(func(action tview.MouseAction, event *tcell.EventMouse, setFocus func(p tview.Primitive)) (consumed bool, capture Primitive) {
+		if !p.InRect(event.Position()) {
+			return false, nil
+		}
+
+		// Pass mouse events down.
+		if p.childPrimitive != nil {
+			consumed, capture = p.childPrimitive.MouseHandler()(action, event, setFocus)
+			if consumed {
+				return
+			}
+		}
+
+		// ...handle mouse events not directed to the child primitive...
+		return true, nil
+	})
 }
 ```
