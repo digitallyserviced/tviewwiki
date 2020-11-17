@@ -83,9 +83,11 @@ app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 })
 ```
 
+You can also hook into mouse events. It works similarly to hooking into key events. Please check the source code documentation.
+
 ## Writing Primitives
 
-If none of this is enough to achieve your goals, you can write your own `Primitive`. Please note that the `Primitive` interface may be subject to changes (e.g. I might add mouse interaction in the future).
+If none of this is enough to achieve your goals, you can write your own `Primitive`. Please note that the `Primitive` interface and some of its handling may be subject to changes.
 
 One could say that all you need to do is implement the [`Primitive` interface](https://godoc.org/github.com/rivo/tview#Primitive). And this is true. But your life will be much easier if you subclass from the [`Box` primitive](https://godoc.org/github.com/rivo/tview#Box), as all other primitives do, because `Box` already provides default implementations for many of `Primitive`'s functions.
 
