@@ -86,3 +86,5 @@ modal := func(p tview.Primitive, width, height int) tview.Primitive {
 		AddItem(p, 1, 1, 1, 1, 0, 0, true)
 }
 ```
+
+See also: https://pkg.go.dev/github.com/rivo/tview#Modal
