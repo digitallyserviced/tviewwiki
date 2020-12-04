@@ -10,7 +10,7 @@ Any event handlers you install, e.g. [`InputField.SetChangedFunc()`](https://god
 
 ## TextView Changes
 
-The [`TextView`](https://godoc.org/github.com/rivo/tview#TextView) primitive implements the [`io.Writer`](https://golang.org/pkg/io/#Writer) interface. It is common to write to a `TextView` from a different goroutine. Therefore, `tview` provides [`TextView.SetChangedFunc()`](https://godoc.org/github.com/rivo/tview#TextView.SetChangedFunc) which notifies you when text was written to your `TextView`. However, contrary to the other handler functions, your handler will be invoked from the same goroutine that writes to the `TextView` so you need to take extra care in your handler.
+The [`TextView`](https://godoc.org/github.com/rivo/tview#TextView) primitive implements the [`io.Writer`](https://golang.org/pkg/io/#Writer) interface. It is common to write to a `TextView` from a different goroutine (which is safe to do). Therefore, `tview` provides [`TextView.SetChangedFunc()`](https://godoc.org/github.com/rivo/tview#TextView.SetChangedFunc) which notifies you when text was written to your `TextView`. However, contrary to the other handler functions, your handler will be invoked from the same goroutine that writes to the `TextView` so you need to take extra care in your handler.
 
 It is always safe to call `Application.Draw()` from the handler, and most of the time, this is the only action needed in the handler anyway. [`TextView.HasFocus()`](https://godoc.org/github.com/rivo/tview#TextView.HasFocus) is also safe, in case you want to update only when the `TextView` has focus.
 
