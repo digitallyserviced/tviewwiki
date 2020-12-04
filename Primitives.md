@@ -21,7 +21,7 @@ tview.NewBox().
     // Draw a horizontal line across the middle of the box.
     centerY := y + height/2
     for cx := x + 1; cx < x+width-1; cx++ {
-      screen.SetContent(cx, centerY, tview.GraphicsHoriBar, nil, tcell.StyleDefault.Foreground(tcell.ColorWhite))
+      screen.SetContent(cx, centerY, tview.BoxDrawingsLightHorizontal, nil, tcell.StyleDefault.Foreground(tcell.ColorWhite))
     }
 
     // Write some text along the horizontal line.
