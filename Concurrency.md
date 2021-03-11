@@ -6,7 +6,7 @@ To solve these issues, there are a couple of things that can be done:
 
 ## Event Handlers
 
-Any event handlers you install, e.g. [`InputField.SetChangedFunc()`](https://godoc.org/github.com/rivo/tview#InputField.SetChangedFunc) or [`Table.SetSelectedFunc()`](https://godoc.org/github.com/rivo/tview#Table.SetSelectedFunc), are invoked from the main goroutine. It is safe to make changes to your primitives in these handlers. If they are invoked in response to a key event, you also don't need to call [`Application.Draw()`](https://godoc.org/github.com/rivo/tview#Application.Draw) as the application's main loop will do that for you.
+Any event handlers you install, e.g. [`InputField.SetChangedFunc()`](https://godoc.org/github.com/rivo/tview#InputField.SetChangedFunc) or [`Table.SetSelectedFunc()`](https://godoc.org/github.com/rivo/tview#Table.SetSelectedFunc), are invoked from the main goroutine. It is safe to make changes to your primitives in these handlers. If they are invoked in response to a key event, you must not call [`Application.Draw()`](https://godoc.org/github.com/rivo/tview#Application.Draw) as the application's main loop will do that for you and calling [`Application.Draw()`](https://godoc.org/github.com/rivo/tview#Application.Draw) (or [`Application.QueueUpdate()`](https://pkg.go.dev/github.com/rivo/tview?utm_source=godoc#Application.QueueUpdate) or [`Application.QueueUpdateDraw()`](https://pkg.go.dev/github.com/rivo/tview?utm_source=godoc#Application.QueueUpdateDraw)) from within an event handler will lead to a deadlock.
 
 ## TextView Changes
 
