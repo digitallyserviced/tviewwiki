@@ -27,6 +27,7 @@ Please check the [[FAQ]] before posting an issue.
 - [[Primitives]]: Writing your own primitives.
 - [[Concurrency]]: How to deal with concurrency in `tview`.
 - [[CustomKeys]]: How to use your own keys instead of `tview`'s default  ones.
+- [[VirtualTable]]: How to use the `Table` widget as a view into your own data structure.
 
 ## Demo Applications
 
