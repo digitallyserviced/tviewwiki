@@ -8,6 +8,7 @@ Please check the [[FAQ]] before posting an issue.
 - [[List]]: A list with selectable options and keyboard shortcuts.
 - [[Form]]: A data entry form.
 - [[TextView]]: A multi-color text view with highlights.
+- [[TextArea]]: A multi-line text editor.
 - [[Table]]: A table view with fixed rows/columns and selectable cells.
 - [[TreeView]]: A tree view for hierarchical data.
 - [[Grid]]: Using Grid to layout multiple widgets.
