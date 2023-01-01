@@ -19,6 +19,7 @@ Please check the [[FAQ]] before posting an issue.
 - [[Checkbox]]: A checkbox.
 - [[DropDown]]: A drop-down selection box.
 - [[InputField]]: A one-line input field.
+- [[Image]]: Image drawing using special Unicode characters.
 - [[Modal]]: Modal windows.
 - [[Unicode]]: Demonstrates the use of wide unicode characters (e.g. Chinese).
 - [[ANSI]]: How to pipe colorized output from other programs into `tview`.
