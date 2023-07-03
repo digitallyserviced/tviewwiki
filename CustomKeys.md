@@ -53,7 +53,7 @@ Finally, this function also exists [in the `Application` class](https://pkg.go.d
 
 ```go
 app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
-	switch event.Rune() {
+	switch event.Key() {
 	case tcell.KeyCtrlQ:
 		app.Stop()
 	case tcell.KeyCtrlC:
